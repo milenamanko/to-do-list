@@ -17,7 +17,28 @@
     </thead>
     <tbody>
     <tr th:each="toDoEntry : ${toDoEntries}">
-        <td><span th:text="${toDoEntry.name}"></span></td>
+        <td>
+            <span th:unless="${toDoEntry.editInProgress}">
+            <span th:text="${toDoEntry.name}"></span>
+                <form action="#" th:action="@{/setToEdit/{id}(id=${toDoEntry.id})}" th:object="${toDoEntry}" method="post">
+                <div class="form-group col-md-1">
+                    <button class="btn btn-dark" type="submit">Edit</button>
+                </div>
+                </form>
+            </span>
+            <span th:if="${toDoEntry.editInProgress}">
+            <form action="#" th:action="@{/edit/{id}(id=${toDoEntry.id})}" th:object="${toDoEntry}" method="post">
+                <div class="form-group col-md-3">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="text" th:value="${toDoEntry.name}" name="name" id="name" class="form-control" />
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-1">
+                    <button class="btn btn-dark" type="submit">Save</button>
+                </div>
+            </form>
+            </span>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -27,11 +48,9 @@
             <form action="#" th:action="@{/add}" th:object="${toDoEntry}" method="post">
                 <div class="row">
                     <div class="form-group col-md-3">
-
-                        <input type="text" th:field="*{name}" class="form-control" id="name">
+                        <input type="text" th:field="*{name}" class="form-control">
                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
                     </div>
-
                     <div class="form-group col-md-1">
                         <button class="btn btn-dark" type="submit">Add</button>
                     </div>

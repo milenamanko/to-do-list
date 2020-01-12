@@ -19,4 +19,6 @@ public class ToDoEntry {
 
     private String name;
 
+    private boolean editInProgress;
+
 }
