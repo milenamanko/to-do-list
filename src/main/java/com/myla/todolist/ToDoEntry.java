@@ -21,4 +21,6 @@ public class ToDoEntry {
 
     private boolean editInProgress;
 
+    private boolean done;
+
 }

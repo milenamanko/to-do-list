@@ -28,7 +28,7 @@ public class ToDoListController {
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(ToDoEntry toDoEntry, @PathVariable(name="id") Long id){
+    public String edit(ToDoEntry toDoEntry, @PathVariable(name = "id") Long id) {
         toDoEntry.setId(id);
         toDoEntry.setEditInProgress(false);
         toDoListRepository.save(toDoEntry);
@@ -36,9 +36,17 @@ public class ToDoListController {
     }
 
     @PostMapping("/setToEdit/{id}")
-    public String setToEdit(ToDoEntry toDoEntry, @PathVariable(name="id") Long id){
+    public String setToEdit(ToDoEntry toDoEntry, @PathVariable(name = "id") Long id) {
         toDoEntry.setId(id);
         toDoEntry.setEditInProgress(true);
+        toDoListRepository.save(toDoEntry);
+        return "redirect:/show";
+    }
+
+    @PostMapping("/setAsDone/{id}")
+    public String setAsDone(ToDoEntry toDoEntry, @PathVariable(name = "id") Long id) {
+        toDoEntry.setId(id);
+        toDoEntry.setDone(true);
         toDoListRepository.save(toDoEntry);
         return "redirect:/show";
     }
